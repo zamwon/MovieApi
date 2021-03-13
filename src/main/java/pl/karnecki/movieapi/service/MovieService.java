@@ -2,7 +2,7 @@ package pl.karnecki.movieapi.service;
 
 import pl.karnecki.movieapi.model.Movie;
 
-import java.time.LocalDate;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -16,11 +16,9 @@ public interface MovieService {
 
     List<Movie> getMoviesByGenre(String genre);
 
-    List<Movie> getMoviesByProductionYear(LocalDate localDate);
+    List<Movie> getMoviesByProductionYear(int year);
 
     boolean addMovie(Movie movie);
-
-    boolean deleteMovie(Long id);
 
     boolean modifyMovie(Movie movie);
 }

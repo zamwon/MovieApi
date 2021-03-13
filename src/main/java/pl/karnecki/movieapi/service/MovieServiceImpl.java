@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.karnecki.movieapi.model.Movie;
 import pl.karnecki.movieapi.repository.MovieRepo;
-
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -51,10 +49,10 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<Movie> getMoviesByProductionYear(LocalDate localDate) {
+    public List<Movie> getMoviesByProductionYear(int year) {
         return movieRepo.getCarList()
                 .stream()
-                .filter(movie -> movie.getProductionYear().equals(localDate.getYear()))
+                .filter(movie -> movie.getProductionYear().getYear() == year)
                 .collect(Collectors.toList());
     }
 
@@ -66,13 +64,8 @@ public class MovieServiceImpl implements MovieService {
                 .anyMatch(movie1 ->
                         movie1.getId().equals(movie.getId()));
         if (isMovieOnList) return false;
-        movieRepo.addCarToList(movie);
+        movieRepo.addMovieToList(movie);
         return true;
-    }
-
-    @Override
-    public boolean deleteMovie(Long id) {
-        return movieRepo.removeMovieFromList(id);
     }
 
     @Override

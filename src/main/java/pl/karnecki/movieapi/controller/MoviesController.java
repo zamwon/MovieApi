@@ -18,8 +18,8 @@ import java.util.Optional;
 public class MoviesController {
 
 
-    private final MovieServiceImpl movieService;
-    private final MailService mailService;
+    MovieServiceImpl movieService;
+    MailService mailService;
 
     @Autowired
     public MoviesController(MovieServiceImpl movieService, MailService mailService) {
@@ -61,6 +61,15 @@ public class MoviesController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+    @GetMapping("/year/{year}")
+    public ResponseEntity<List<Movie>> getMovieByYear(@PathVariable int year) {
+
+        List<Movie> first = movieService.getMoviesByProductionYear(year);
+        if (!first.isEmpty()) {
+            return new ResponseEntity<>(first, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
 
     @PostMapping
@@ -73,7 +82,7 @@ public class MoviesController {
     }
 
     @PutMapping()
-    public ResponseEntity<HttpStatus> modifyCar(@RequestBody Movie movie) {
+    public ResponseEntity<HttpStatus> modifyMovie(@RequestBody Movie movie) {
         if (movie.getId() != null) {
             movieService.modifyMovie(movie);
             return new ResponseEntity<>(HttpStatus.OK);

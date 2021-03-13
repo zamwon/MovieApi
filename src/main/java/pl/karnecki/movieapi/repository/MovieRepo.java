@@ -44,7 +44,7 @@ public class MovieRepo {
         return movieList;
     }
 
-    public boolean addCarToList(Movie movie) {
+    public boolean addMovieToList(Movie movie) {
         Optional<Movie> carOptional = movieList.stream()
                 .filter(oldCar -> oldCar.getId().equals(movie.getId()))
                 .findFirst();
